@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Handler implements Runnable{
 
-    public static ArrayList<Handler> clientHandkers = new ArrayList<>();
+    public static ArrayList<Handler> clientHandlers = new ArrayList<>();
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
@@ -16,7 +16,7 @@ public class Handler implements Runnable{
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader((socket.getInputStream())));
             this.name = bufferedReader.readLine();
-            clientHandkers.add(this);
+            clientHandlers.add(this);
             serverMsg(name + " has entered chat");
         }catch (IOException e){
             closeDownAll(socket, bufferedReader, bufferedWriter);
@@ -38,7 +38,7 @@ public class Handler implements Runnable{
     }
 
     public void  serverMsg(String message){
-        for (Handler handler : clientHandkers){
+        for (Handler handler : clientHandlers){
             try{
                 if(!handler.name.equals(name)){
                     handler.bufferedWriter.write(message);
@@ -52,7 +52,7 @@ public class Handler implements Runnable{
     }
 
     public void removeClient(){
-        clientHandkers.remove(this);
+        clientHandlers.remove(this);
         serverMsg(name + " has left chat");
     }
 

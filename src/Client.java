@@ -28,9 +28,19 @@ public class Client {
             bufferedWriter.flush();
 
             Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
+
             while (socket.isConnected()){
                 String message = scanner.nextLine();
-                bufferedWriter.write(name + ": " + message);
+                System.out.println(Handler.clientHandlers);
+                if(message.equals("/name")){
+                    System.out.println("Enter a new name");
+                    String newName = scanner.nextLine().strip();
+                    System.out.println("now you are known as " + newName);
+                    bufferedWriter.write(this.name + " now known as " + newName);
+                    this.name = newName;
+                }else {
+                    bufferedWriter.write(name + ": " + message);
+                }
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
@@ -76,7 +86,7 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your name: ");
         String name = scanner.nextLine();
-        Socket socket = new Socket("localhost", 8788);
+        Socket socket = new Socket("localhost", 1234);
         Client client = new Client(socket, name.strip());
         client.listenMsg();
         client.sendMsg();

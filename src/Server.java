@@ -3,7 +3,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-    private ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
 
     public Server (ServerSocket serverSocket){
         this.serverSocket = serverSocket;
@@ -33,7 +33,7 @@ public class Server {
     }
 
     public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket( 8788);
+        ServerSocket serverSocket = new ServerSocket( 1234);
         Server server = new Server(serverSocket);
         server.startServer();
     }
